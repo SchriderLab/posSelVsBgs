@@ -1,0 +1,1 @@
+#bin	chrom	chromStart	chromEnd	name	score

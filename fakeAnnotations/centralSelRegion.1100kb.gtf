@@ -1,0 +1,1 @@
+chrFake	ME	exon	525000	575000	.	+	.	gene_id "fakegene"; transcript_id "faketrans"; gene_type "literalpseudogene"; gene_status "FAKE"; gene_name "NOTREAL0"; transcript_type "literalpseudogene"; transcript_status "IMAGINARY"; transcript_name "NOTREAL0L0"; level 2; havana_gene "stillfake";
