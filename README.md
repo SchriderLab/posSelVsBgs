@@ -41,9 +41,9 @@ These scripts are generated via `./generateAllSweepSimLaunchFiles.sh`. Again, th
 
 You man run the following commands in any order
 
-`./generateAllSmallAndBigStatsForShicSims.sh`
-`./generateAllShicSummaryStatsFwdpy.sh`
-`./generateAllShicSummaryStats.sh`
+- `./generateAllSmallAndBigStatsForShicSims.sh`
+- `./generateAllShicSummaryStatsFwdpy.sh`
+- `./generateAllShicSummaryStats.sh`
 
 These will calculate statistics on the coalescent simulations and also some additional statistics for our forward simulations. Again, these will be launched to your SLURM queue and may take some time to complete.
 
@@ -51,8 +51,8 @@ These will calculate statistics on the coalescent simulations and also some addi
 
 Once the calculations above have finished, run the following in this order:
 
-`./generateAllShicTrainingTestSets.sh`
-`./trainShic.sh`
+1. `./generateAllShicTrainingTestSets.sh`
+2. `./trainShic.sh`
 
 Again, these will be launched to your SLURM queue and may take some time to complete.
 
@@ -68,6 +68,6 @@ These also go to the queue and are fairly slow (could be sped up substantially i
 
 To plot the mean values of various summary statistics across simulations of random genomic regions (top command), mean values across replicates of a small number of randomly selected regions (middle command), and the values from each individual simulation replicate (bottom command), simply run the following in any order:
 
-`./plotAllStatsRandom.sh`
-`./plotAllStatsRepeated.sh`
-`./python plotAllIndivSims.py`
+- `./plotAllStatsRandom.sh`
+- `./plotAllStatsRepeated.sh`
+- `./python plotAllIndivSims.py`
