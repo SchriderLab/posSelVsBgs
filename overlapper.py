@@ -80,7 +80,7 @@ def sumElementSizes(elements):
 def readBedCoordsIntoList(bedFileName):
     coordLs = []
     with open(bedFileName) as bedFile:
-        for line in bedFile.xreadlines():
+        for line in bedFile:
             if not line.startswith("track"):
                 line = line.strip()
                 c, s, e = line.split("\t")[:3]
