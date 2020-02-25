@@ -74,7 +74,7 @@ To plot the mean values of various summary statistics across simulations of rand
 
 - `./plotAllStatsRandom.sh`
 - `./plotAllStatsRepeated.sh`
-- `./python plotAllIndivSims.py`
+- `python plotAllIndivSims.py`
 
 # Additional contents
 
