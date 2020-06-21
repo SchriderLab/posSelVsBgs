@@ -38,9 +38,9 @@ These will each launch a series of SLURM array jobs. You will have to wait for t
 
 Simlpy run the following bash scripts in any order:
 
-`./simLaunchScripts/humanEquilib.sh`
-`./simLaunchScripts/tennessenEuro.sh`
-`./simLaunchScripts/sheehanSong.sh`
+- `./simLaunchScripts/humanEquilib.sh`
+- `./simLaunchScripts/tennessenEuro.sh`
+- `./simLaunchScripts/sheehanSong.sh`
 
 These scripts are generated via `./generateAllSweepSimLaunchFiles.sh`. Again, these will be launched to your SLURM queue and may take some time to complete.
 
