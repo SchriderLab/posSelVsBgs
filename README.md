@@ -1,5 +1,5 @@
 # Overview
-This repository contains the code for my investigation of the separability of models of background selection and genetic hitchhiking in simulations designed to model these processes in humans and *Drosophila* based on these genomes' gene annotations, recombination maps, esimated distributions of fitness effects (DFEs), etc (see preprint at https://www.biorxiv.org/content/10.1101/2019.12.13.876136). The goal is to create a more accurate model of how BGS behaves in actual genomes than has been done previously. Note that all annotations are from the GRCh37/hg19 and BDGP R5/dm3dm3 versions of the human and *Drosophila* assemblies, respectively.
+This repository contains the code for my investigation of the separability of models of background selection and genetic hitchhiking in simulations designed to model these processes in humans and *Drosophila* based on these genomes' gene annotations, recombination maps, esimated distributions of fitness effects (DFEs), etc (see preprint at https://doi.org/10.1101/2019.12.13.876136). The goal is to create a more accurate model of how BGS behaves in actual genomes than has been done previously. Note that all annotations are from the GRCh37/hg19 and BDGP R5/dm3dm3 versions of the human and *Drosophila* assemblies, respectively.
 
 This repo is not a cohesive software package, but rather a set of pipelines for conducting coalescent and forward simulations of hitchhiking and background selection, calculating population genetic summary statistics from these simulations, using classifiers to discriminate between the two models, and plotting summaries and results.
 
@@ -90,4 +90,4 @@ All plots will appear in the `plots` directory and subdirectories therein.
 
 # Additional contents
 
-In addition to the code described above, this repo contains annotations from the human (hg19) and *Drosophila* (dm3) genomes that we used to model BGS. See manuscript for more information (https://www.biorxiv.org/content/10.1101/2019.12.13.876136).
+In addition to the code described above, this repo contains annotations from the human (hg19) and *Drosophila* (dm3) genomes that we used to model BGS. See manuscript for more information (https://doi.org/10.1101/2019.12.13.876136).
