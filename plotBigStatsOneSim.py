@@ -71,7 +71,7 @@ def plotBigStatsOneSim(stats, species, overallLowHigh, subWinMidpts, statNames, 
         plt.setp(ax[i, j].get_yticklabels(), fontsize=18)
     fig.tight_layout(rect=[0, 0, 1, 0.95])
     fig.savefig(plotFileName)
-
+    plt.close()
 
 statsToPlot = 'pi tajD fayWuH maxFDA HapCount H12 H2/H1 ZnS Omega distVar distSkew distKurt'.split()
 titlePrefix = prefixToPlotTitle(statPrefix)

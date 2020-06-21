@@ -22,7 +22,7 @@ do
     gapFile=$annotDir/gaps.bed
     cncSelRatio=1.0
 
-    for dominance in 0.0 1.0 2.0;
+    for dominance in 0.0 0.5 1.0;
     do
         dataDir=simData/$dfe/dominanceRealBgsRandom/dominance_$dominance
         statsDir=$dataDir/stats

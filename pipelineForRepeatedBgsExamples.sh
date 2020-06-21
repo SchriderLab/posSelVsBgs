@@ -9,7 +9,7 @@ dfeMean=-0.030
 dfeShape=0.206
 delMutFracCoding=0.75
 delMutFracCnc=0.75
-dominance=0.5
+dominance=0.25
 
 for pop in tennessenEuro humanEquilib;
 do

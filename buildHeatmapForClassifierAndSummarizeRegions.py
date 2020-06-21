@@ -39,10 +39,12 @@ def makeConfusionMatrixHeatmap(data, title, trueClassOrderLs, predictedClassOrde
     ax.set_xlabel("Predicted class")
     ax.set_ylabel("True class")
 
-    plt.suptitle(title, fontsize=14, y=1.03)
+    #plt.suptitle(title, fontsize=14, y=1.03)
     plt.tight_layout()
     if figSize == "bigly":
         fig.set_size_inches(4.5, 3.5)
+    elif figSize == "wide":
+        fig.set_size_inches(7, 2.5)
     else:
         fig.set_size_inches(3.5, 2.5)
     plt.savefig(figFileName, bbox_inches='tight')
@@ -177,7 +179,7 @@ def writePredAndRegionSummaries(preds, logDir, summaryOutDir, scenarioName, gene
 
     cncSelRatio = 0
     with open(summaryOutFile, "wt") as f:        
-        header = "sim", "prediction", "centralSelTotal", "centralSelExon", "centralSelCnc",\
+        header = "sim", "hardProb", "hardLinkedProb", "softProb", "softLinkedProb", "neutProb", "centralSelTotal", "centralSelExon", "centralSelCnc",\
            "flankSelTotal", "flankSelExon", "flankSelCnc",\
            "totalSelTotal", "totalSelExon", "totalSelCnc",\
            "totalRecRateInMorgans"
@@ -193,7 +195,7 @@ def writePredAndRegionSummaries(preds, logDir, summaryOutDir, scenarioName, gene
             rregionCoords, totalRecRateInMorgans2 = selRegionsFromAnnotOneRead.readRecRegionsInWin(recRates, winC, winStart, winEnd, rRescale=rMean)
             summaries = calcRegionSummaries(winC, winStart, winEnd, sregionCoords, totSelRegionSize, rregionCoords, totalRecRateInMorgans)
             chrom, cWinStart, cWinEnd, bigWin, predClass, pNeutral, pLSoft, pLHard, pSoft, pHard = preds[i]
-            f.write(logFileNames[i] + "\t" + str(float(pSoft)+float(pHard)) + "\t" + "\t".join([str(x) for x in summaries]) + "\n")
+            f.write(logFileNames[i] + "\t" + "\t".join([str(x) for x in [pHard, pLHard, pSoft, pLSoft, pNeutral]]) + "\t" + "\t".join([str(x) for x in summaries]) + "\n")
 
 def main():
     modelArch, modelWeights, shicTestSetDir, absurdBgsFvecFileName, realBgsFvecFileName, realBgsWeakCNCFvecFileName, realNeutFvecFileName, realBgsLogDir, realBgsWeakCNCLogDir, realNeutLogDir, geneAnnotFileName, phastConsFileName, recRateFileName, rMean, summaryOutDir, figFileName = sys.argv[1:]
@@ -202,7 +204,6 @@ def main():
 
     writePredAndRegionSummaries(realBgsPreds, realBgsLogDir, summaryOutDir, "realBgs", geneAnnotFileName, phastConsFileName, recRateFileName, rMean)
     writePredAndRegionSummaries(realBgsWeakCNCPreds, realBgsWeakCNCLogDir, summaryOutDir, "realBgsWeakCNC", geneAnnotFileName, phastConsFileName, recRateFileName, rMean)
-    writePredAndRegionSummaries(realNeutPreds, realNeutLogDir, summaryOutDir, "realNeut", geneAnnotFileName, phastConsFileName, recRateFileName, rMean)
         
     makeConfusionMatrixHeatmap(allPredFracs, "Predshictions", trueClassOrderLs, predictedClassOrderLs, figFileName, figSize="bigly")
 

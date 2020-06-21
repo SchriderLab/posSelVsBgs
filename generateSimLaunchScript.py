@@ -34,7 +34,7 @@ alphaHigh = maxS*2*N0
 alphaLow = minS*2*N0
 
 tauLow = 0
-tauHigh = 0.001
+tauHigh = tauHigh = 200/(4*N0)
 selStr = " -ws 0 -Pa %f %f -Pu %f %f" %(alphaLow, alphaHigh, tauLow, tauHigh)
 softStr = " -Pf 0 0.05"
 

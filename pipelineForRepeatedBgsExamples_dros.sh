@@ -15,7 +15,7 @@ delMutFracCnc=0.75
 dfe=flyHubDFE
 dfeMean=-0.000133
 dfeShape=0.35
-dominance=0.5
+dominance=0.25
 
 pop=sheehanSong
 discoalLaunchFile=discoalCmds/$pop.sh

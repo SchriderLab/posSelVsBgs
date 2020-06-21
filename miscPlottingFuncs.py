@@ -52,7 +52,7 @@ def readStatMeansFromDir(statDir, winSize):
     for statName in statVecs:
         statMeans[statName] = []
         for i in range(len(subWinMidpts)):
-            statMeans[statName].append(np.mean([x[i] for x in statVecs[statName]]))
+            statMeans[statName].append(np.nanmean([x[i] for x in statVecs[statName]]))
     return statMeans, subWinMidpts
 
 def readOverallStatMeansFromDir(statDir, winSize):
@@ -60,12 +60,10 @@ def readOverallStatMeansFromDir(statDir, winSize):
 
     overallStatMeans = {}
     for statName in statVecs:
-        statSum = 0
-        statDenom = 0
+        currStats = []
         for i in range(len(subWinMidpts)):
-            statSum += sum([x[i] for x in statVecs[statName]])
-            statDenom += len(statVecs[statName])
-        overallStatMeans[statName] = statSum/float(statDenom)
+            currStats += [x[i] for x in statVecs[statName]]
+        overallStatMeans[statName] = np.nanmean(currStats)
     return overallStatMeans
 
 def formatStatName(name):
@@ -82,7 +80,7 @@ def formatStatName(name):
     elif name == "maxFDA":
         return "max(DAF)"
     elif name == "HapCount":
-        return "# of discint haplotpyes"
+        return "# of distinct haplotpyes"
     elif name == "H12":
         return r"$H_{12}$"
     elif name == "H2/H1":
@@ -101,26 +99,31 @@ def formatStatName(name):
         return name
 
 def getStatYLimsDrosophila(name, minVal, maxVal):
-    if name in ["pi", "thetaW", "thetaH", "H12", "ZnS", "distVar"]:
-        buf = maxVal*0.2
+    if name in ["thetaW", "thetaH", "H12"]:
+        buf = maxVal
         return (0, min(1, maxVal+buf))
+    elif name == "pi":
+        return (0, 0.005)
     elif name == "tajD":
-        return (min(-2, minVal), max(2, maxVal))
+        return (min(-3, minVal), 1)
     elif name == "maxFDA":
-        return (0.7, 1.0)
+        return (0.75, 1.0)
     elif name == "H2/H1":
         #buf = (maxVal-minVal)*0.2
         #return (minVal-buf, 1.0)
-        return (0.5, 1.0)
+        return (0.05, 1.0)
     elif name == "HapCount":
-        buf = (maxVal-minVal)*0.75
-        return (minVal-buf, 100)
+        return (0, 100)
     elif name in ["fayWuH"]:
-        buf = (maxVal-minVal)*0.2
-        return (minVal-buf, maxVal+buf)
-    elif name in ["distSkew", "distKurt"]:
-        buf = (maxVal-minVal)*0.5
-        return (minVal-buf, maxVal+buf)
+        return (-0.002, 0.006)
+    elif name == "distSkew":
+        return (-1, 4)
+    elif name == "distKurt":
+        return (-2, 15)
+    elif name == "distVar":
+        return (0, 1e-5)
+    elif name == "ZnS":
+        return (0, 0.25)
     elif name in ["Omega"]:
         buf = maxVal*0.5
         return (0, maxVal+buf)
@@ -137,25 +140,30 @@ def getStatYLimsHuman(name, minVal, maxVal):
     elif name == "ZnS":
         return (0, 0.25)
     elif name == "distVar":
-        return (0, 5e-7)
+        return (0, 2.5e-7)
     elif name == "tajD":
         return (min(-2, minVal), max(2, maxVal))
     elif name == "maxFDA":
         return (0.5, 1.0)
     elif name == "H2/H1":
-        return (0.5, 1.0)
+        return (0.15, 1.0)
     elif name == "HapCount":
-        buf = (maxVal-minVal)*1.5
-        return (minVal-buf, 100)
+        #buf = (maxVal-minVal)*1.75
+        #return (minVal-buf, 100)
+        return (30, 100)
     elif name in ["fayWuH"]:
-        buf = (maxVal-minVal)*0.2
-        return (minVal-buf, maxVal+buf)
-    elif name in ["distSkew","distKurt"]:
-        buf = maxVal-minVal
-        return (minVal-buf*0.5, maxVal+buf*0.75)
+        #buf = (maxVal-minVal)*0.5
+        #return (minVal-buf, maxVal+buf)
+        return (-0.0001, 0.00035)
+    elif name in ["distSkew"]:
+        return (-0.5, 2)
+    elif name in ["distKurt"]:
+        return (-1, 4.5)
+        #buf = maxVal-minVal
+        #return (minVal-buf*0.5, maxVal+buf*0.75)
     elif name in ["Omega"]:
         buf = maxVal*0.5
-        return (0, maxVal+buf)
+        return (0, max(maxVal+buf, 20))
     else:
         raise Exception
 
@@ -184,6 +192,29 @@ def overallMinAndMax(stats, statName):
         mins.append(min(stats[selType][statName]))
         maxes.append(max(stats[selType][statName]))
     return (min(mins), max(maxes))
+
+def readStatsFromFile(fileName, winSize):
+    if fileName.endswith("gz"):
+        fopen = gzip.open
+    else:
+        fopen = open
+    currStatVec = {}
+    with fopen(fileName) as f:
+        first = True
+        subWinMidpts = []
+        for line in f:
+            if first:
+                header = line.strip().split()
+                first = False
+                for i in range(1, len(header)):
+                    currStatVec[header[i]] = []
+            else:
+                line = line.strip().split()
+                subWinIndex = int(line[0])
+                subWinMidpts.append(subWinIndex*winSize + winSize/2)
+                for i in range(1, len(header)):
+                    currStatVec[header[i]].append(float(line[i]))
+    return currStatVec, subWinMidpts
 
 def readStatMeansFromBaseDir(baseDir, demogScenarioName, winSize):
     statMeans = {}

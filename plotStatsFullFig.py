@@ -58,7 +58,7 @@ def plotStats(host, stats, statNames, subWinMidpts, neutExpectations, colors, ad
         curr.spines[directionOpp(direction)].set_visible(False)
         curr.tick_params(axis='y', colors=colors[statIndex])
         curr.set_ylim(bottom=0, top=1.2*max([neutExpectations[statName] for statName in statNames]))
-    host.legend(handles=plots, loc='best')
+    host.legend(handles=plots, loc='lower right')
 
 colors = ['black','red','blue']
 statsToPlot = ["pi", "thetaW", "thetaH"]
