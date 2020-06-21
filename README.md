@@ -18,16 +18,19 @@ Install of the dependencies above, then clone this repo and run `python setup.py
 
 # Pipeline
 
-## Pipeline for simulating background selection (BGS)
+## Pipeline for simulating background selection (BGS) and BGS + sweeps via `fwdpy11`
 
 To run BGS simulations and calculate some statistics summarize them, use the following `bash` scripts in any order:
 
-`./pipelineForRandomBgsSamples.sh`
-`./pipelineForRandomBgsSamples_dros.sh`
-`./dominancePipeline.sh`
-`./dominancePipeline_dros.sh`
-`./pipelineForRepeatedBgsExamples.sh`
-`./pipelineForRepeatedBgsExamples_dros.sh`
+- `./pipelineForRandomBgsSamples.sh`
+- `./pipelineForRandomBgsSamples_dros.sh`
+- `./dominancePipeline.sh`
+- `./dominancePipeline_dros.sh`
+- `./pipelineForRepeatedBgsExamples.sh`
+- `./pipelineForRepeatedBgsExamples_dros.sh`
+- `./pipelineForRandomBgsSamplesBigly.sh`
+- `./pipelineForRandomBgsSamplesBigly_dros.sh`
+- `./pipelineForRandomBgsSamplesSweep.sh`
 
 These will each launch a series of SLURM array jobs. You will have to wait for them all to finish (which may take several days or longer depending on your computing resources) before proceeding with downstream analyses (though the coalescent simulations below could be launched in parallel).
 
@@ -48,6 +51,7 @@ You man run the following commands in any order
 - `./generateAllSmallAndBigStatsForShicSims.sh`
 - `./generateAllShicSummaryStatsFwdpy.sh`
 - `./generateAllShicSummaryStats.sh`
+- `./generateAllShicSummaryStatsFwdpyDominance.sh`
 
 These will calculate statistics on the coalescent simulations and also some additional statistics for our forward simulations. Again, these will be launched to your SLURM queue and may take some time to complete.
 
@@ -62,9 +66,12 @@ Again, these will be launched to your SLURM queue and may take some time to comp
 
 ## Running S/HIC classifiers on the BGS and sweep simulations:
 
-Once training is complete, run:
+Once training is complete, run the following in any order:
 
-`./testShicAndGetSummaries.sh`
+- `./testShicAndGetSummaries.sh`
+- `./testShicOnAllDominanceSims.sh`
+- `./testShicOnAllBiglySims.sh`
+- `python sampleUniformlyFromSweepParamRange.py` (This will also generate a plot results for the BGS+sweep simulations in the form of a heatmap.)
 
 These also go to the queue and are fairly slow (could be sped up substantially if needed).
 
@@ -75,6 +82,11 @@ To plot the mean values of various summary statistics across simulations of rand
 - `./plotAllStatsRandom.sh`
 - `./plotAllStatsRepeated.sh`
 - `python plotAllIndivSims.py`
+- `python plotBiglyResults.py`
+- `python plotDominanceMisclassifications.py` (See commented usage example at the top of the script.)
+- `python plotRecRateMisclassifications.py`
+
+All plots will appear in the `plots` directory and subdirectories therein.
 
 # Additional contents
 
